@@ -173,21 +173,15 @@ class KecamatanController extends Controller
     public function update(Request $request, $id_kecamatan)
     {
         try {
-            $data_kecamatan = Kecamatan::findOrFail($id_kecamatan);
-            dd($data_kecamatan);
+            $data_kecamatan = Kecamatan::where('id_kecamatan', $id_kecamatan)->first();
 
             $validatedData = $request->validate([
-                // 'id_kecamatan' => 'required',
-                'id_kabupaten' => 'required',
                 'name' => 'required',
             ]);
 
-            $data_kecamatan->update([
-                // 'id_kecamatan' => $validatedData['id_kecamatan'],
-                'id_kabupaten' => $validatedData['id_kabupaten'],
+            $data_kecamatan->where('id_kecamatan', $id_kecamatan)->update([
                 'name' => $validatedData['name'],
             ]);
-
 
             if ($request->is('api/*')) {
                 return response()->json([
@@ -197,7 +191,7 @@ class KecamatanController extends Controller
                 ], Response::HTTP_OK);
             } else {
                 Session::flash('success', 'Data kecamatan (' . $data_kecamatan->name . ') berhasil diubah');
-                return redirect()->route('data_kecamatan.show', ['data_kecamatan' => $data_kecamatan->id_kecamatan]);
+                return redirect()->route('data-kecamatan.show', ['data_kecamatan' => $data_kecamatan->id_kecamatan]);
             }
         } catch (\Exception $e) {
             if ($request->is('api/*')) {
@@ -216,8 +210,130 @@ class KecamatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(KecamatanController $dataKecamatan)
+    public function destroy($id_kecamatan, Request $request)
     {
-        //
+        try {
+            $data_kecamatan = Kecamatan::where('id_kecamatan', $id_kecamatan)->first();
+
+            // Soft delete data
+            $data_kecamatan->where('id_kecamatan', $id_kecamatan)->delete();
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data kecamatan (' . $data_kecamatan->name . ') dipindahkan ke kotak sampah (trash)',
+                ], Response::HTTP_OK);
+            } else {
+                return redirect()->route('data-kecamatan.index')->with('success', 'Data kecamatan (' . $data_kecamatan->name . ') dipindahkan ke kotak sampah (trash)');
+            }
+        } catch (\Exception $e) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal memindahkan ke kotak sampah (Trash) data kecamatan.',
+                    'error' => $e->getMessage(),
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            } else {
+                return redirect()->back()
+                    ->with('error', 'Gagal memindahkan ke kotak sampah (Trash) data kecamatan. ' . $e->getMessage());
+            }
+        }
+    }
+
+    public function trash(Request $request)
+    {
+        try {
+            $trashedKecamatan = Kecamatan::onlyTrashed()->get();
+
+            $data = [
+                'header_name' => "Data Kecamatan",
+                'page_name' => "Kotak Sampah Data Kecamatan"
+            ];
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berhasil memuat data trash kecamatan',
+                    'data' => $trashedKecamatan,
+                ], Response::HTTP_OK);
+            } else {
+                return view('pages.data_kecamatan.trash', compact('trashedKecamatan', 'data'));
+            }
+        } catch (\Exception $e) {
+            if ($request->is('api/*')) {
+                return response()->json(
+                    [
+                        'success' => false,
+                        'message' => 'Gagal mendapatkan data trash kecamatan',
+                        'error' => $e->getMessage(),
+                    ],
+                    Response::HTTP_INTERNAL_SERVER_ERROR
+                );
+            } else {
+                return redirect()->back()
+                    ->with('error', 'Gagal mendapatkan data trash kecamatan ' . $e->getMessage());
+            }
+        }
+    }
+
+    public function restoreFromTrash($id_kecamatan, Request $request)
+    {
+        try {
+            $restoredKecamatan = Kecamatan::withTrashed()->where('id_kecamatan', $id_kecamatan)->first();
+
+            // Restore trashed data
+            $restoredKecamatan->where('id_kecamatan', $id_kecamatan)->restore();
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data kecamatan (' . $restoredKecamatan->name . ') berhasil dikembalikan dari trash.',
+                    'data' => $restoredKecamatan,
+                ], Response::HTTP_OK);
+            } else {
+                return redirect()->back()->with('success', 'Data kecamatan (' . $restoredKecamatan->name . ')  berhasil dikembalikan dari trash.');
+            }
+        } catch (\Exception $e) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal mengembalikan data instansi dari trash.',
+                    'error' => $e->getMessage(),
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            } else {
+
+                return redirect()->back()->with('error', 'Gagal mengembalikan data instansi dari trash. ' . $e->getMessage());
+            }
+        }
+    }
+
+    public function deletePermanently($id_kecamatan, Request $request)
+    {
+        try {
+            $deletedKecamatan = Kecamatan::withTrashed()->where('id_kecamatan', $id_kecamatan)->first();
+
+            // Permanently delete data
+            $deletedKecamatan->where('id_kecamatan', $id_kecamatan)->forceDelete();
+
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Data kecamatan (' . $deletedKecamatan->name . ')  berhasil dihapus permanen.',
+                ], Response::HTTP_OK);
+            } else {
+                return redirect()->route('data-kecamatan.index')->with('success', 'Data kecamatan (' . $deletedKecamatan->name . ') berhasil dihapus permanen.');
+            }
+        } catch (\Exception $e) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menghapus data kecamatan permanen.',
+                    'error' => $e->getMessage(),
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            } else {
+
+                return redirect()->back()->with('error', 'Gagal menghapus data kecamatan permanen. ' . $e->getMessage());
+            }
+        }
     }
 }
