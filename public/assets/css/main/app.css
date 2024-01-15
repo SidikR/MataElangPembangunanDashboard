@@ -318,6 +318,7 @@
  */
 :root {
     --color-primary-red:#9e1919;
+    --color-red-secondary:#c91919;
     --color-secondary-grey:#f2f7ff;
     --bs-blue: #435ebe;
     --bs-indigo: #6610f2;
@@ -560,6 +561,17 @@ a:not([href]):not([class]):hover {
     color: inherit;
     text-decoration: none;
 }
+
+.bg-primary-red{
+    background-color: var(--color-primary-red);
+    color: white;
+}
+
+.bg-secondary-red{
+    background-color: var(--color-red-secondary);
+    color: white;
+}
+
 code,
 kbd,
 pre,
@@ -16951,6 +16963,23 @@ body .bi:before {
 .modal.modal-borderless .modal-footer {
     border-top: 0;
 }
+/*  */
+
+#sidebar{
+    transition: all 1s ease-out;
+}
+
+#toggle-btn{
+    border-radius: 0px 5px 5px 0px;
+}
+
+.vertical-text {
+    writing-mode: vertical-rl; /* Vertical writing mode, right-to-left */
+    transform: rotate(180deg); /* Rotate the text 180 degrees */
+    display: inline-block; /* Ensure the rotation works correctly */
+}
+
+
 #sidebar.active .sidebar-wrapper {
     left: 0;
 }
@@ -16962,12 +16991,10 @@ body .bi:before {
 }
 .sidebar-wrapper {
     background-color: var(--color-primary-red);
-    bottom: 0;
     height: 100vh;
     overflow-y: auto;
-    position: fixed;
-    top: 0;
     transition: left 0.5s ease-out;
+    /* transition: all 1s; */
     width: 300px;
     z-index: 10;
 }
@@ -17630,7 +17657,7 @@ body .bi:before {
     display: none;
 }
 #main {
-    margin-left: 300px;
+    /* margin-left: 300px; */
     padding: 2rem;
 }
 @media screen and (max-width: 1199px) {
@@ -17772,3 +17799,37 @@ a {
 .z-1 {
     z-index: 1;
 }
+
+.app-wrapper{
+    overflow: hidden;
+}
+
+/* Gaya CSS untuk elemen scroll di bagian "main" */
+#main {
+    overflow-y: auto;
+    flex: 1;
+    padding: 16px;
+    border-radius: 5px; /* Menambahkan border-radius */
+}
+
+/* Gaya CSS untuk warna background scroll di bagian "main" */
+#main::-webkit-scrollbar {
+    width: 12px;
+}
+
+#main::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary-red); /* Warna thumb scroll */
+    border-radius: 5px; /* Menambahkan border-radius pada thumb */
+}
+
+#main::-webkit-scrollbar-track {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f1f1f1; /* Warna track scroll */
+    border-radius: 5px; /* Menambahkan border-radius pada track */
+}
+
+.header{
+    background-color: var(--color-red-secondary);
+}
+
