@@ -1,11 +1,11 @@
 <footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
-            <p>2021 &copy; Mazer</p>
+            <p>2024 &copy; Dinas Komunikasi dan Informasi Lam-Sel</p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                    href="https://saugi.me">Pemerintah Kabupaten Lampung Selatan</a></p>
+            <p>Created with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a href="#">Pemerintah
+                    Kabupaten Lampung Selatan</a></p>
         </div>
     </div>
 </footer>

@@ -3424,6 +3424,7 @@ fieldset:disabled .btn {
     border-right: 0.3em solid transparent;
     border-top: 0.3em solid;
     content: "";
+    color: white;
     display: inline-block;
     margin-left: 0.255em;
     vertical-align: 0.255em;

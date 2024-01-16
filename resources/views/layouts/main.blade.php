@@ -18,9 +18,9 @@
 
 </head>
 
-<body style="overflow: hidden">
-    <div id="app" class="app-wrapper wkwk">
-        <div class="d-flex flex-column row">
+<body style="width: 100%; height: 100vh; overflow: hidden;">
+    <div id="app" class="app-wrapper" style="width: 100%; height: 100vh; overflow: hidden;">
+        <div class="d-flex flex-column row" style="overflow: hidden;">
 
             @include('partials.header')
 

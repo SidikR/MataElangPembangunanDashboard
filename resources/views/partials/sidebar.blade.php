@@ -1,6 +1,6 @@
 <div class="col d-flex justify-content-start align-items-center"
     style="height: fit-content; max-height: fit-content; width: fit-content ; max-width: fit-content; ">
-    <div id="sidebar" class="sidebar-wrapper" style="width: 350px; max-width: 350px;">
+    <div id="sidebar" class="sidebar-wrapper" style="width: 350px; max-width: 350px; height: 95vh; max-height: 95vh">
         <div id="toggle-dark" class="sidebar-header position-relative d-none">
             <div class="sidebar-toggler x">
                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
