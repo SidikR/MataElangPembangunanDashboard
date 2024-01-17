@@ -17834,3 +17834,10 @@ a {
     background-color: var(--color-red-secondary);
 }
 
+.bg-red-primary{
+    background-color: var(--color-primary-red);
+}
+
+.bg-red-secondary{
+    background-color: var(--color-red-secondary);
+}

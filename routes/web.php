@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InstansiController;
 use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ use App\Http\Controllers\KecamatanController;
 Route::get('/', function () {
     return view('pages.index');
 });
+
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+Route::post('/login', [LoginController::class, 'send'])->name('login.send');
+
 Route::get('/photoss', function () {
     return view('photo');
 });

@@ -39,24 +39,12 @@
                         <span>Data Umum</span>
                     </a>
                     <ul class="submenu">
-                        <li class="submenu-item">
+                        <li class="submenu-item p-2 ">
                             <a class="<?php echo isKeywordActive(['instansi']) ? 'active' : ''; ?>" href={{ route('instansi.index') }}>Data Instansi (OPD)</a>
-                        </li>
-                        <li class="submenu-item">
                             <a class="<?php echo isKeywordActive(['data-kecamatan']) ? 'active' : ''; ?>" href={{ route('data-kecamatan.index') }}>Data Kecamatan</a>
                         </li>
-                    </ul>
-                </li>
-
-                <li class="sidebar-item  has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span>Dinas Kesehatan</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item ">
-                            <a href="#">Stunting</a>
-                        </li>
+                        {{-- <li class="submenu-item">
+                        </li> --}}
                     </ul>
                 </li>
 
